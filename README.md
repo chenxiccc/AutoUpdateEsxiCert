@@ -13,11 +13,15 @@ Let's encrypt 证书申请，请参考这个：https://github.com/acmesh-officia
 
 esxi ssh中 执行 /usr/lib/vmware/openssh/bin/ssh-keygen -t rsa 生成公钥，并把/.ssh/id_rsa.pub的公钥内容添加到服务器的~/.ssh/authorized_keys中。
 
-esxi重启后公钥和私钥都会丢失，要把生成的公钥和私钥放到esxi的非系统目录下（如/vmfs/volumes/your_disk_name/bak/），并参考第4条，在local.sh 的 exit 0之前添加
+esxi重启后公钥和私钥都会丢失，要把生成的公钥和私钥备份一份放到esxi的非系统目录下（如/vmfs/volumes/your_disk_name/bak/），并参考第4条，在local.sh 的 exit 0之前添加
 
-mv /vmfs/volumes/your_disk_name/bak/id_rsa /.ssh/id_rsa
+mkdir -p /.ssh
 
-mv /vmfs/volumes/your_disk_name/bak/id_rsa.pub /.ssh/id_rsa.pub
+cp /vmfs/volumes/your_disk_name/bak/known_hosts /.ssh/known_hosts
+
+cp /vmfs/volumes/your_disk_name/bak/id_rsa /.ssh/id_rsa
+
+cp /vmfs/volumes/your_disk_name/bak/id_rsa.pub /.ssh/id_rsa.pub
 
 chmod 600 /.ssh/id_rsa
 
