@@ -1,5 +1,7 @@
 判断ESXI的证书过期日，如果小于等于2天到期，则通过scp命令从其他服务器上自动获取新的证书（需要配合其他VPS的acme脚本；或者ESXI内跑一个Openwrt，使用acme.me插件）
 
+使用脚本前，先期准备：
+
 0. 上传本脚本到esxi下，比如/vmfs/volumes/your_disk_name/shell/esxisslupdate.sh
 
 1. 通过公钥实现ESXI免密登录远端服务器，以便自动通过scp拉取证书文件。（可能esxi重启后，公钥会被自动删除。未经验证。如果出现此问题，
