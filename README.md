@@ -12,16 +12,20 @@ esxi ssh中 执行 /usr/lib/vmware/openssh/bin/ssh-keygen -t rsa 生成公钥，
 
 2. 设置esxi的crontab，实现定时运行。请先参考 https://blog.csdn.net/weixin_45735058/article/details/102491062 文章
 编辑esxi crontab: vi /var/spool/cron/crontabs/root
+
 0 4 * * * /bin/sh /vmfs/volumes/your_disk_name/shell/esxisslupdate.sh
 
 3. 重启crontab服务，使定时任务立即生效
 /bin/kill $(cat /var/run/crond.pid)
+
 /usr/lib/vmware/busybox/bin/busybox crond
 
 4. 使crontab的更改在esxi重启后仍能保存。
 vi /etc/rc.local.d/local.sh，,在exit 0之前增加
 /bin/kill $(cat /var/run/crond.pid)
+
 /bin/echo "0 4 * * * /bin/sh /vmfs/volumes/your_disk_name/shell/esxisslupdate.sh" >> /var/spool/cron/crontabs/root
+
 /usr/lib/vmware/busybox/bin/busybox crond
 
 5. 最后执行/sbin/auto-backup.sh 保存当前配置，以便重启后仍生效
