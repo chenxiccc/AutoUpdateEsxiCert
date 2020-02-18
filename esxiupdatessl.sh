@@ -1,14 +1,5 @@
 #!/bin/sh
 #判断ESXI的证书过期日，如果小于等于2天到期，则通过scp命令从其他服务器上获取新的证书（需要配合其他VPS的acme脚本；或者ESXI内跑一个Openwrt，使用acme.me插件）
-#请先参考 https://blog.csdn.net/weixin_45735058/article/details/102491062 文章
-#还需要esxi通过/usr/lib/vmware/openssh/bin/ssh-keygen -t rsa 生成公钥，并把/.ssh/id_rsa.pub的公钥内容添加到服务器的~/.ssh/authorized_keys中
-#编辑esxi crontab: vi /var/spool/cron/crontabs/root
-# 0 4 * * * /bin/sh /vmfs/volumes/5c49aa1d-e9e18a2c-a09c-00e0670e93f6/shell/esxisslupdate.sh
-#修改/etc/rc.local.d/local.sh,在exit 0之前增加
-#/bin/kill $(cat /var/run/crond.pid)
-#/bin/echo "0 4 * * * /bin/sh /vmfs/volumes/5c49aa1d-e9e18a2c-a09c-00e0670e93f6/shell/esxisslupdate.sh" >> /var/spool/cron/crontabs/root
-#/usr/lib/vmware/busybox/bin/busybox crond
-#最后执行/sbin/auto-backup.sh 保存当前配置，以便重启后仍生效
 
 #获取证书到期日，并处理成date格式
 noAfterdays=$(openssl x509 -in /etc/vmware/ssl/rui.crt -noout -dates | grep 'notAfter=' | cut -d '=' -f 2 | cut -d ' ' -f 4,1,2 | awk '{print $3,$1,$2}' | sed 's/[ ]/-/g' | sed 's/Jan/01/g' | sed 's/Feb/02/g' | sed 's/Mar/03/g' | sed 's/Apr/04/g' | sed 's/May/05/g' | sed 's/Jun/06/g' | sed 's/Jul/07/g' | sed 's/Aug/08/g' | sed 's/Sep/09/g' | sed 's/Oct/10/g' | sed 's/Nov/11/g' | sed 's/Sep/12/g')
