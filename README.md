@@ -21,7 +21,7 @@ chmod 600 /.ssh/id_rsa
 2. 设置esxi的crontab，实现定时运行。请先参考 https://blog.csdn.net/weixin_45735058/article/details/102491062 文章
 编辑esxi crontab: vi /var/spool/cron/crontabs/root
 
-0 4 * * * /bin/sh /vmfs/volumes/your_disk_name/shell/esxisslupdate.sh
+0 20 * * * /bin/sh /vmfs/volumes/your_disk_name/shell/esxisslupdate.sh
 
 3. 重启crontab服务，使定时任务立即生效
 
@@ -34,7 +34,7 @@ vi /etc/rc.local.d/local.sh，,在exit 0之前增加
 
 /bin/kill $(cat /var/run/crond.pid)
 
-/bin/echo "0 4 * * * /bin/sh /vmfs/volumes/your_disk_name/shell/esxisslupdate.sh" >> /var/spool/cron/crontabs/root
+/bin/echo "0 20 * * * /bin/sh /vmfs/volumes/your_disk_name/shell/esxisslupdate.sh" >> /var/spool/cron/crontabs/root
 
 /usr/lib/vmware/busybox/bin/busybox crond
 
