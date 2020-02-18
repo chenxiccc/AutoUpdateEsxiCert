@@ -1,4 +1,5 @@
 判断ESXI的证书过期日，如果小于等于2天到期，则通过scp命令从其他服务器上自动获取新的证书（需要配合其他VPS的acme脚本；或者ESXI内跑一个Openwrt，使用acme.me插件）
+自行修改 your_disk_name 、192.168.123.1、domain.com.crt。
 
 使用脚本前，先期准备：
 
