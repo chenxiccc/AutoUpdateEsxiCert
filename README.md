@@ -6,15 +6,17 @@
 
 0. 上传本脚本到esxi下，比如/vmfs/volumes/your_disk_name/shell/esxisslupdate.sh
 
-1. 通过公钥实现ESXI免密登录远端服务器，以便自动通过scp拉取证书文件。（esxi重启后，要把生成的公钥和私钥放到esxi的非系统目录下（如/vmfs/volumes/your_disk_name/bak/），并参考第4条，在local.sh中添加
+1. 通过公钥实现ESXI免密登录远端服务器，以便自动通过scp拉取证书文件。
+
+esxi ssh中 执行 /usr/lib/vmware/openssh/bin/ssh-keygen -t rsa 生成公钥，并把/.ssh/id_rsa.pub的公钥内容添加到服务器的~/.ssh/authorized_keys中。
+
+esxi重启后公钥和私钥都会丢失，要把生成的公钥和私钥放到esxi的非系统目录下（如/vmfs/volumes/your_disk_name/bak/），并参考第4条，在local.sh中添加
 
 mv /vmfs/volumes/your_disk_name/bak/id_rsa /.ssh/id_rsa
 
 mv /vmfs/volumes/your_disk_name/bak/id_rsa.pub /.ssh/id_rsa.pub
 
 chmod 600 /.ssh/id_rsa
-
-esxi ssh中 执行 /usr/lib/vmware/openssh/bin/ssh-keygen -t rsa 生成公钥，并把/.ssh/id_rsa.pub的公钥内容添加到服务器的~/.ssh/authorized_keys中
 
 2. 设置esxi的crontab，实现定时运行。请先参考 https://blog.csdn.net/weixin_45735058/article/details/102491062 文章
 编辑esxi crontab: vi /var/spool/cron/crontabs/root
