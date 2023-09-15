@@ -1,4 +1,4 @@
-此脚本运行在esxi上，通过cronb每天自动运行一次，判断ESXI的证书过期日，如果小于等于2天到期，则通过scp命令从其他服务器上自动获取新的证书（需要配合其他VPS的acme脚本；或者ESXI内跑一个Openwrt，使用acme.me插件）。
+此脚本运行在esxi上，通过crond每天自动运行一次，判断ESXI的证书过期日，如果小于等于2天到期，则通过scp命令从其他服务器上自动获取新的证书（需要配合其他VPS的acme脚本；或者ESXI内跑一个Openwrt，使用acme.me插件）。
 Let's encrypt 证书申请，请参考这个：https://github.com/acmesh-official/acme.sh/wiki/说明
 使用Let's encrypt证书替换esxi证书，请参考这个：https://hitian.info/notes/2018/07/12/vmware-esxi-upgrade-ssl-certificate/
 
